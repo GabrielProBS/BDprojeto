@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 15/04/2025 às 14:16
+-- Tempo de geração: 22/04/2025 às 14:29
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -28,20 +28,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `alunos` (
-  `cpf_PK` int(11) NOT NULL,
+  `cpf` int(11) NOT NULL,
   `rm` int(11) NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `turma_id_FK` int(11) NOT NULL,
-  `projeto_id_FK` int(11) NOT NULL
+  `nome` varchar(60) NOT NULL,
+  `id_turma` int(11) NOT NULL,
+  `id_projeto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `alunos`
---
-
-INSERT INTO `alunos` (`cpf_PK`, `rm`, `nome`, `turma_id_FK`, `projeto_id_FK`) VALUES
-(1234, 8190, 'Adriano', 1, 1),
-(9731, 3401, 'Rafael', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -50,16 +42,16 @@ INSERT INTO `alunos` (`cpf_PK`, `rm`, `nome`, `turma_id_FK`, `projeto_id_FK`) VA
 --
 
 CREATE TABLE `cursos` (
-  `id_PK` int(11) NOT NULL,
-  `nome` varchar(45) NOT NULL
+  `id_curso` int(11) NOT NULL,
+  `nome` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `cursos`
 --
 
-INSERT INTO `cursos` (`id_PK`, `nome`) VALUES
-(1, 'DS');
+INSERT INTO `cursos` (`id_curso`, `nome`) VALUES
+(1, '');
 
 -- --------------------------------------------------------
 
@@ -68,17 +60,9 @@ INSERT INTO `cursos` (`id_PK`, `nome`) VALUES
 --
 
 CREATE TABLE `projetos` (
-  `id_PK` int(11) NOT NULL,
-  `titulo` varchar(45) NOT NULL
+  `id_projeto` int(11) NOT NULL,
+  `nome` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `projetos`
---
-
-INSERT INTO `projetos` (`id_PK`, `titulo`) VALUES
-(1, 'Seguidor de linha'),
-(2, 'Maratona de programação');
 
 -- --------------------------------------------------------
 
@@ -87,19 +71,9 @@ INSERT INTO `projetos` (`id_PK`, `titulo`) VALUES
 --
 
 CREATE TABLE `turmas` (
-  `id_PK` int(11) NOT NULL,
-  `serie` int(11) NOT NULL,
-  `curso_id_FK` int(11) NOT NULL,
-  `turno_id_FK` int(11) NOT NULL
+  `id_turma` int(11) NOT NULL,
+  `serie` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `turmas`
---
-
-INSERT INTO `turmas` (`id_PK`, `serie`, `curso_id_FK`, `turno_id_FK`) VALUES
-(1, 2, 1, 1),
-(2, 3, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -119,6 +93,69 @@ CREATE TABLE `turnos` (
 INSERT INTO `turnos` (`id_PK`, `periodo`) VALUES
 (1, 'Manhã'),
 (2, 'Tarde');
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices de tabela `alunos`
+--
+ALTER TABLE `alunos`
+  ADD PRIMARY KEY (`cpf`),
+  ADD KEY `id_turma` (`id_turma`),
+  ADD KEY `id_projeto` (`id_projeto`);
+
+--
+-- Índices de tabela `cursos`
+--
+ALTER TABLE `cursos`
+  ADD PRIMARY KEY (`id_curso`);
+
+--
+-- Índices de tabela `projetos`
+--
+ALTER TABLE `projetos`
+  ADD PRIMARY KEY (`id_projeto`);
+
+--
+-- Índices de tabela `turmas`
+--
+ALTER TABLE `turmas`
+  ADD PRIMARY KEY (`id_turma`);
+
+--
+-- AUTO_INCREMENT para tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `alunos`
+--
+ALTER TABLE `alunos`
+  MODIFY `cpf` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `cursos`
+--
+ALTER TABLE `cursos`
+  MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `projetos`
+--
+ALTER TABLE `projetos`
+  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `alunos`
+--
+ALTER TABLE `alunos`
+  ADD CONSTRAINT `alunos_ibfk_1` FOREIGN KEY (`id_turma`) REFERENCES `turmas` (`id_turma`),
+  ADD CONSTRAINT `alunos_ibfk_2` FOREIGN KEY (`id_projeto`) REFERENCES `projetos` (`id_projeto`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
