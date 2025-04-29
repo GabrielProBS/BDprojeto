@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 22/04/2025 às 14:29
+-- Tempo de geração: 29/04/2025 às 14:23
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `alunos` (
-  `cpf` int(11) NOT NULL,
+  `cpf` varchar(11) NOT NULL,
   `rm` int(11) NOT NULL,
   `nome` varchar(60) NOT NULL,
   `id_turma` int(11) NOT NULL,
@@ -64,6 +64,21 @@ CREATE TABLE `projetos` (
   `nome` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `projetos`
+--
+
+INSERT INTO `projetos` (`id_projeto`, `nome`) VALUES
+(1, 'Projeto de Robótica'),
+(2, 'Projeto de Matemática'),
+(3, 'Feira de Ciências'),
+(4, 'Clube de Leitura'),
+(5, 'Educação Ambiental'),
+(6, 'Projeto de Artes'),
+(7, 'Grupo de Teatro'),
+(8, 'Projeto de História'),
+(9, 'Oficina de Programação');
+
 -- --------------------------------------------------------
 
 --
@@ -75,6 +90,19 @@ CREATE TABLE `turmas` (
   `serie` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `turmas`
+--
+
+INSERT INTO `turmas` (`id_turma`, `serie`) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7);
+
 -- --------------------------------------------------------
 
 --
@@ -82,17 +110,9 @@ CREATE TABLE `turmas` (
 --
 
 CREATE TABLE `turnos` (
-  `id_PK` int(11) NOT NULL,
-  `periodo` varchar(45) DEFAULT NULL
+  `id_turno` int(11) NOT NULL,
+  `periodo` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `turnos`
---
-
-INSERT INTO `turnos` (`id_PK`, `periodo`) VALUES
-(1, 'Manhã'),
-(2, 'Tarde');
 
 --
 -- Índices para tabelas despejadas
@@ -102,7 +122,7 @@ INSERT INTO `turnos` (`id_PK`, `periodo`) VALUES
 -- Índices de tabela `alunos`
 --
 ALTER TABLE `alunos`
-  ADD PRIMARY KEY (`cpf`),
+  ADD PRIMARY KEY (`cpf`) USING BTREE,
   ADD KEY `id_turma` (`id_turma`),
   ADD KEY `id_projeto` (`id_projeto`);
 
@@ -125,14 +145,14 @@ ALTER TABLE `turmas`
   ADD PRIMARY KEY (`id_turma`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- Índices de tabela `turnos`
 --
+ALTER TABLE `turnos`
+  ADD PRIMARY KEY (`id_turno`);
 
 --
--- AUTO_INCREMENT de tabela `alunos`
+-- AUTO_INCREMENT para tabelas despejadas
 --
-ALTER TABLE `alunos`
-  MODIFY `cpf` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `cursos`
@@ -144,7 +164,7 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de tabela `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restrições para tabelas despejadas
